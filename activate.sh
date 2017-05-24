@@ -3,7 +3,7 @@
 # Achieves transparent mode for mitmproxy on Linux.
 #
 # by Paulo Feitosa <coding.paulo.feitosa@gmail.com>
-# v1.0.0 2017-04-07
+# v1.0.1 2017-05-22
 #
 
 set -o errexit
@@ -32,20 +32,19 @@ main() {
   local iface="$1"
   local port="8080"
 
-  while getopts "h?p:" opt; do
-    case "${opt}" in
+  while getopts "h?p:" OPT; do
+    case "${OPT}" in
       h|\?)
         usage
         exit 0
         ;;
       p)
-        port="${optarg}"
+        port="${OPTARG}"
         ;;
     esac
   done
 
   local iptables="/usr/bin/iptables"
-  local mitmproxy="/usr/bin/mitmproxy"
   local sysctl="/usr/bin/sysctl"
 
   "${sysctl}" -w net.ipv4.ip_forward=1
